@@ -29,3 +29,22 @@ function divide(a, b, ...numbers) {
     }
 return quotient;
 }
+
+function operate(operator, num1, num2) {
+    if (operator == "+") {
+        let sum = add(num1, num2); 
+        return sum;   
+    }
+    else if (operator == "-") {
+        let difference = subtract(num1, num2);
+        return difference;
+    }
+    else if (operator == "*") {
+        let product = multiply(num1, num2);
+        return product;
+    }
+    else if (operator == "/") {
+        let quotient = divide(num1, num2);
+        return quotient;
+    }
+}  
