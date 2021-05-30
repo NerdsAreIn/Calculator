@@ -1,3 +1,33 @@
+let displayValue1;
+let displayValue2;
+let num1 = "";
+let num2 = "";
+let operator;
+let displayOperator;
+const output = document.querySelector("output");
+const clearButton = document.getElementById("AC");
+const sevenButton = document.getElementById("7");
+const eightButton = document.getElementById("8");
+const plus_sign = document.getElementById("plus");
+
+sevenButton.onclick = () => {
+    if (operator == undefined) {
+        num1 += "7";
+        displayValue1 = num1;
+        let display = document.createTextNode(displayValue1);
+        output.appendChild(display);
+        console.log({num1});
+        console.log({displayValue1});
+        console.log({display});
+    }
+    else {
+    num2 += "7";
+    displayValue2 = num2;
+    output.textContent += displayValue2;
+    console.log({num2});
+    }
+}
+
 function add (a, b, ...numbers) {
     let sum = a + b;
     for (let i = 0; i < numbers.length; i++) {
