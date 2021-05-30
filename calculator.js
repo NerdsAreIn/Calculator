@@ -9,6 +9,27 @@ const clearButton = document.getElementById("AC");
 const equals_sign = document.getElementById("equals");
 const numberButtons = Array.from(document.getElementsByClassName("number"));
 const operators = Array.from(document.getElementsByClassName("operator"));
+const decimal = document.getElementById("dot");
+const backspace = document.getElementById("backspace");
+
+backspace.onclick = () => {
+    if (num2 != "") {
+    let num2Array = String(num2).split("");
+    console.log({num2Array});
+    num2Array.pop();
+    output.textContent = num2Array;
+    }
+    else if (num2 == "" && operator != undefined) {
+     output.textContent -= operator;
+    }
+    else {
+    let num1Array = String(num1).split("");
+    console.log({num1Array});
+     //num1Array[num1Array.length - 1];
+    num1Array.pop();
+    output.textContent = num1Array;
+    }
+}
 
 operators.forEach((operatorButton) => {
     operatorButton.addEventListener("click", () => {
@@ -25,12 +46,23 @@ operators.forEach((operatorButton) => {
     });
 });
 
+decimal.onclick = () => {
+    output.textContent += ".";
+}
+
 equals_sign.onclick = () => {
     output.textContent += " = ";
     result = operate(operator, num1, num2);
     console.log({result});
     output.textContent += result;
 }
+
+clearButton.onclick = () => {
+        output.textContent = "";
+        num1 = "";
+        num2 = "";
+        operator = undefined;
+     }
 
 for (let i = 0; i < numberButtons.length; i++) {
     numberButtons[i].onclick = () => {
