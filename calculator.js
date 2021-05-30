@@ -48,13 +48,17 @@ operators.forEach((operatorButton) => {
 
 decimal.onclick = () => {
     output.textContent += ".";
+    if (num2 != "") {
+      num2 += ".";
+   }
+   else num1 += ".";
 }
 
 equals_sign.onclick = () => {
     output.textContent += " = ";
     result = operate(operator, num1, num2);
     console.log({result});
-    output.textContent += result;
+    output.textContent += result.toFixed(2);
 }
 
 clearButton.onclick = () => {
