@@ -1,35 +1,59 @@
-let displayValue1;
-let displayValue2;
+//let displayValue1;
+//let displayValue2;
 let num1 = "";
 let num2 = "";
 let operator;
-let displayOperator;
+//let display;
+let result;
+//let displayOperator;
 const output = document.querySelector("output");
 const clearButton = document.getElementById("AC");
 const sevenButton = document.getElementById("7");
 const eightButton = document.getElementById("8");
 const plus_sign = document.getElementById("plus");
+const equals_sign = document.getElementById("equals");
 
 sevenButton.onclick = () => {
     if (operator == undefined) {
-        num1 += "7";
-        displayValue1 = num1;
-        let display = document.createTextNode(displayValue1);
-        output.appendChild(display);
+        num1 = num1 + 7;
+        output.textContent += num1;
         console.log({num1});
-        console.log({displayValue1});
-        console.log({display});
     }
     else {
-    num2 += "7";
-    displayValue2 = num2;
-    output.textContent += displayValue2;
+    num2 += 7;
+    output.textContent += num2;
     console.log({num2});
     }
 }
 
+eightButton.onclick = () => {
+    if (operator == undefined) {
+        num1 = num1 + 8;
+        output.textContent += num1;
+        console.log({num1});
+    }
+    else {
+    num2 += 8;
+    output.textContent += num2;
+    console.log({num2});
+    }
+}
+
+plus_sign.onclick = () => {
+        operator = " + ";
+        output.textContent += operator;
+        console.log({operator});
+}
+
+equals_sign.onclick = () => {
+    output.textContent += " = ";
+    result = operate(operator, num1, num2);
+    console.log({result});
+    output.textContent += result;
+}
+    
 function add (a, b, ...numbers) {
-    let sum = a + b;
+    let sum = +a + +b;
     for (let i = 0; i < numbers.length; i++) {
    	sum += numbers[i]; 
     }
@@ -61,19 +85,19 @@ return quotient;
 }
 
 function operate(operator, num1, num2) {
-    if (operator == "+") {
+    if (operator == " + ") {
         let sum = add(num1, num2); 
         return sum;   
     }
-    else if (operator == "-") {
+    else if (operator == " - ") {
         let difference = subtract(num1, num2);
         return difference;
     }
-    else if (operator == "*") {
+    else if (operator == " * ") {
         let product = multiply(num1, num2);
         return product;
     }
-    else if (operator == "/") {
+    else if (operator == " / ") {
         let quotient = divide(num1, num2);
         return quotient;
     }
