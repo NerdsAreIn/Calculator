@@ -1,49 +1,29 @@
-//let displayValue1;
-//let displayValue2;
 let num1 = "";
 let num2 = "";
+let newNumber;
+let newNumber2;
 let operator;
-//let display;
 let result;
-//let displayOperator;
 const output = document.querySelector("output");
 const clearButton = document.getElementById("AC");
-const sevenButton = document.getElementById("7");
-const eightButton = document.getElementById("8");
-const plus_sign = document.getElementById("plus");
 const equals_sign = document.getElementById("equals");
+const numberButtons = Array.from(document.getElementsByClassName("number"));
+const operators = Array.from(document.getElementsByClassName("operator"));
 
-sevenButton.onclick = () => {
-    if (operator == undefined) {
-        num1 = num1 + 7;
-        output.textContent += num1;
-        console.log({num1});
-    }
-    else {
-    num2 += 7;
-    output.textContent += num2;
-    console.log({num2});
-    }
-}
-
-eightButton.onclick = () => {
-    if (operator == undefined) {
-        num1 = num1 + 8;
-        output.textContent += num1;
-        console.log({num1});
-    }
-    else {
-    num2 += 8;
-    output.textContent += num2;
-    console.log({num2});
-    }
-}
-
-plus_sign.onclick = () => {
-        operator = " + ";
-        output.textContent += operator;
+operators.forEach((operatorButton) => {
+    operatorButton.addEventListener("click", () => {
+        operator = " " + operatorButton.getAttribute("id") + " ";
+        if (operator == " * ") {
+            output.textContent += " × ";
+        }
+        else if (operator == " / ") {
+            output.textContent += " ÷ ";
+        }
+        else output.textContent += operator;
         console.log({operator});
-}
+        return operator;
+    });
+});
 
 equals_sign.onclick = () => {
     output.textContent += " = ";
@@ -51,7 +31,26 @@ equals_sign.onclick = () => {
     console.log({result});
     output.textContent += result;
 }
-    
+
+for (let i = 0; i < numberButtons.length; i++) {
+    numberButtons[i].onclick = () => {
+        if (operator == undefined) {
+            newNumber = numberButtons[i].getAttribute("id");
+            num1 += newNumber;
+            output.textContent += newNumber;
+            console.log({num1});
+            return num1;
+        }
+        else {
+            newNumber2 = numberButtons[i].getAttribute("id");
+            num2 += newNumber2;
+            output.textContent += newNumber2;
+            console.log({num2});
+            return num2;
+        }
+    }
+}
+ 
 function add (a, b, ...numbers) {
     let sum = +a + +b;
     for (let i = 0; i < numbers.length; i++) {
