@@ -4,6 +4,9 @@ let newNumber;
 let newNumber2;
 let operator;
 let result;
+let outputArray;
+let num1Array;
+let num2Array;
 const output = document.querySelector("output");
 const clearButton = document.getElementById("AC");
 const equals_sign = document.getElementById("equals");
@@ -13,22 +16,39 @@ const decimal = document.getElementById("dot");
 const backspace = document.getElementById("backspace");
 
 backspace.onclick = () => {
-    if (num2 != "") {
-    let num2Array = String(num2).split("");
+    if (num2 !== "") {
+    num2Array = String(num2).split("");
     console.log({num2Array});
+    output.textContent - Number(num2Array);
     num2Array.pop();
-    output.textContent = num2Array;
+    let newNum2 = num2Array;
+    //let toBeDeleted = num1Array.pop();
+    num2 = Number(newNum2.join(""));
+    //output.textContent - toBeDeleted;
+    output.textContent + Number(newNum2.join(""));
+    return num2;
     }
-    else if (num2 == "" && operator != undefined) {
+    /*else if (num2 == "" && operator != undefined) {
      output.textContent -= operator;
-    }
+    }*/
+// TODO: The code below works. Now for num2 and operator.
     else {
-    let num1Array = String(num1).split("");
-    console.log({num1Array});
-     //num1Array[num1Array.length - 1];
-    num1Array.pop();
-    output.textContent = num1Array;
+        num1Array = String(num1).split("");
+        console.log({num1Array});
+        num1Array.pop();
+        let newNum = num1Array;
+        console.log({newNum});
+        num1 = Number(newNum.join(""));
+        if (newNum.length === 0) {
+            output.textContent = "";
+        }
+        else output.textContent = Number(newNum.join(""));
+        return num1;
     }
+   /* outputArray = output.textContent.toString().split("");
+    console.log({outputArray});
+    outputArray.pop();
+    output.textContent = outputArray.join("");*/
 }
 
 operators.forEach((operatorButton) => {
@@ -58,7 +78,10 @@ equals_sign.onclick = () => {
     output.textContent += " = ";
     result = operate(operator, num1, num2);
     console.log({result});
-    output.textContent += result.toFixed(2);
+    if (result.toString().includes(".")) {
+        output.textContent += result.toFixed(2);
+    }
+    else output.textContent += result;    
 }
 
 clearButton.onclick = () => {
