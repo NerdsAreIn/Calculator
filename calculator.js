@@ -4,9 +4,10 @@ let newNumber;
 let newNumber2;
 let operator;
 let result;
-let outputArray;
+//let outputArray;
 let num1Array;
 let num2Array;
+let operatorArray = [];
 const output = document.querySelector("output");
 const clearButton = document.getElementById("AC");
 const equals_sign = document.getElementById("equals");
@@ -62,6 +63,14 @@ operators.forEach((operatorButton) => {
         }
         else output.textContent += operator;
         console.log({operator});
+        operatorArray[operatorArray.length] = operator;
+        console.log({operatorArray});
+        if (operatorArray.length > 1) {
+            result = operate(operatorArray[operatorArray.length - 2], num1, num2);
+            console.log({result});
+            num1 = result;
+            num2 = "";
+        }        
         return operator;
     });
 });
@@ -81,7 +90,7 @@ equals_sign.onclick = () => {
     if (result.toString().includes(".")) {
         output.textContent += result.toFixed(2);
     }
-    else output.textContent += result;    
+    else output.textContent += result;
 }
 
 clearButton.onclick = () => {
@@ -89,6 +98,7 @@ clearButton.onclick = () => {
         num1 = "";
         num2 = "";
         operator = undefined;
+        operatorArray = [];
      }
 
 for (let i = 0; i < numberButtons.length; i++) {
