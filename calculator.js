@@ -57,6 +57,7 @@ operators.forEach((operatorButton) => {
         operator = " " + operatorButton.getAttribute("id") + " ";
         if (output.textContent.includes("=")) {
             output.textContent += "";
+            return;
         }
         else if (operator == " * ") {
             output.textContent += " × ";
@@ -70,6 +71,14 @@ operators.forEach((operatorButton) => {
         console.log({operatorArray});
         if (operatorArray.length > 1) {
             result = operate(operatorArray[operatorArray.length - 2], num1, num2);
+            output.textContent = result;
+            if (operator == " * ") {
+                output.textContent += " × ";
+            }
+            else if (operator == " / ") {
+                output.textContent += " ÷ ";
+            }
+            else output.textContent += operator;
             console.log({result});
             num1 = result;
             num2 = "";
@@ -122,6 +131,7 @@ for (let i = 0; i < numberButtons.length; i++) {
             num1 = "";
             num2 = "";
             output.textContent += "";
+            return;
         }
          else if (operator == undefined) {
             newNumber = numberButtons[i].getAttribute("id");
