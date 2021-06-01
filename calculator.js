@@ -55,13 +55,16 @@ backspace.onclick = () => {
 operators.forEach((operatorButton) => {
     operatorButton.addEventListener("click", () => {
         operator = " " + operatorButton.getAttribute("id") + " ";
-        if (operator == " * ") {
+        if (output.textContent.includes("=")) {
+            output.textContent += "";
+        }
+        else if (operator == " * ") {
             output.textContent += " × ";
         }
         else if (operator == " / ") {
             output.textContent += " ÷ ";
         }
-        else output.textContent += operator;
+        else { output.textContent += operator; }
         console.log({operator});
         operatorArray[operatorArray.length] = operator;
         console.log({operatorArray});
@@ -75,15 +78,27 @@ operators.forEach((operatorButton) => {
     });
 });
 
-decimal.onclick = () => {
-    output.textContent += ".";
-    if (num2 != "") {
-      num2 += ".";
-   }
-   else num1 += ".";
+decimal.addEventListener("click", addDecimal);
+
+function addDecimal() {
+    if (output.textContent.includes("=")) {
+        output.textContent += "";
+    }
+     else if (operator != undefined && !num2.includes(".")) {
+        output.textContent += ".";
+        num2 += ".";
+    }
+    else if (!num1.includes(".")) {
+        output.textContent += ".";
+        num1 += ".";
+    }
 }
 
 equals_sign.onclick = () => {
+    if (output.textContent.includes("=")) {
+            output.textContent += "";
+            return;
+        }
     output.textContent += " = ";
     result = operate(operator, num1, num2);
     console.log({result});
@@ -103,7 +118,12 @@ clearButton.onclick = () => {
 
 for (let i = 0; i < numberButtons.length; i++) {
     numberButtons[i].onclick = () => {
-        if (operator == undefined) {
+        if (output.textContent.includes("=")) {
+            num1 = "";
+            num2 = "";
+            output.textContent += "";
+        }
+         else if (operator == undefined) {
             newNumber = numberButtons[i].getAttribute("id");
             num1 += newNumber;
             output.textContent += newNumber;
