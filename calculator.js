@@ -7,6 +7,7 @@ let result;
 //let outputArray;
 let num1Array;
 let num2Array;
+let numberContent;
 let operatorArray = [];
 const output = document.querySelector("output");
 const clearButton = document.getElementById("AC");
@@ -133,19 +134,136 @@ for (let i = 0; i < numberButtons.length; i++) {
             output.textContent += "";
             return;
         }
-         else if (operator == undefined) {
-            newNumber = numberButtons[i].getAttribute("id");
-            num1 += newNumber;
-            output.textContent += newNumber;
-            newNumber.style.color = numberButtons[i].getAttribute("class");
+        else if (operator == undefined) {            
+            numberContent = numberButtons[i].getAttribute("id");
+            num1 += numberContent;
+            if (numberButtons[i].className === "number red") {
+                newNumber = document.createElement("span");
+                newNumber.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber.setAttribute("style", "color:red");
+                output.appendChild(newNumber);                
+            }       
+            else if (numberButtons[i].className === "number orange") {
+                newNumber = document.createElement("span");
+                newNumber.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber.setAttribute("style", "color:orange");
+                output.appendChild(newNumber);                
+            }   
+            else if (numberButtons[i].className === "number yellow") {
+                newNumber = document.createElement("span");
+                newNumber.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber.setAttribute("style", "color:yellow");
+                output.appendChild(newNumber);                
+            }   
+            else if (numberButtons[i].className === "number green") {
+                newNumber = document.createElement("span");
+                newNumber.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber.setAttribute("style", "color:green");
+                output.appendChild(newNumber);                
+            }   
+            else if (numberButtons[i].className === "number blue") {
+                newNumber = document.createElement("span");
+                newNumber.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber.setAttribute("style", "color:blue");
+                output.appendChild(newNumber);                
+            }   
+            else if (numberButtons[i].className === "number indigo") {
+                newNumber = document.createElement("span");
+                newNumber.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber.setAttribute("style", "color:indigo");
+                output.appendChild(newNumber);                
+            }   
+            else if (numberButtons[i].className === "number violet") {
+                newNumber = document.createElement("span");
+                newNumber.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber.setAttribute("style", "color:violet");
+                output.appendChild(newNumber);                
+            }   
+            else if (numberButtons[i].className === "number pink") {
+                newNumber = document.createElement("span");
+                newNumber.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber.setAttribute("style", "color:pink");
+                output.appendChild(newNumber);                
+            }   
+            else if (numberButtons[i].className === "number brown") {
+                newNumber = document.createElement("span");
+                newNumber.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber.setAttribute("style", "color:brown");
+                output.appendChild(newNumber);                
+            }   
+            else if (numberButtons[i].className === "number lime") {
+                newNumber = document.createElement("span");
+                newNumber.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber.setAttribute("style", "color:lime");
+                output.appendChild(newNumber);                
+            }                    
             console.log({num1});
             return num1;
         }
         else {
-            newNumber2 = numberButtons[i].getAttribute("id");
-            num2 += newNumber2;
-            output.textContent += newNumber2;
-            console.log({num2});
+            numberContent = numberButtons[i].getAttribute("id");
+            num2 += numberContent;  
+            if (numberButtons[i].className === "number red") {
+                newNumber2 = document.createElement("span");
+                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber2.setAttribute("style", "color:red");
+                output.appendChild(newNumber2);                
+            }       
+            else if (numberButtons[i].className === "number orange") {
+                newNumber2 = document.createElement("span");
+                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber2.setAttribute("style", "color:orange");
+                output.appendChild(newNumber2);                
+            }   
+            else if (numberButtons[i].className === "number yellow") {
+                newNumber2 = document.createElement("span");
+                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber2.setAttribute("style", "color:yellow");
+                output.appendChild(newNumber2);                
+            }   
+            else if (numberButtons[i].className === "number green") {
+                newNumber2 = document.createElement("span");
+                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber2.setAttribute("style", "color:green");
+                output.appendChild(newNumber2);                
+            }   
+            else if (numberButtons[i].className === "number blue") {
+                newNumber2 = document.createElement("span");
+                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber2.setAttribute("style", "color:blue");
+                output.appendChild(newNumber2);                
+            }   
+            else if (numberButtons[i].className === "number indigo") {
+                newNumber2 = document.createElement("span");
+                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber2.setAttribute("style", "color:indigo");
+                output.appendChild(newNumber2);                
+            }   
+            else if (numberButtons[i].className === "number violet") {
+                newNumber2 = document.createElement("span");
+                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber2.setAttribute("style", "color:violet");
+                output.appendChild(newNumber2);                
+            }   
+            else if (numberButtons[i].className === "number pink") {
+                newNumber2 = document.createElement("span");
+                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber2.setAttribute("style", "color:pink");
+                output.appendChild(newNumber2);                
+            }   
+            else if (numberButtons[i].className === "number brown") {
+                newNumber2 = document.createElement("span");
+                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber2.setAttribute("style", "color:brown");
+                output.appendChild(newNumber2);                
+            }   
+            else if (numberButtons[i].className === "number lime") {
+                newNumber2 = document.createElement("span");
+                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber2.setAttribute("style", "color:lime");
+                output.appendChild(newNumber2);                
+            }                    
+            console.log({num2});    
             return num2;
         }
     }
