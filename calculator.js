@@ -137,6 +137,7 @@ for (let i = 0; i < numberButtons.length; i++) {
             newNumber = numberButtons[i].getAttribute("id");
             num1 += newNumber;
             output.textContent += newNumber;
+            newNumber.style.color = numberButtons[i].getAttribute("class");
             console.log({num1});
             return num1;
         }

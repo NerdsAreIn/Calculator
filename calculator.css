@@ -3,18 +3,41 @@ box-sizing: border-box;
 margin: 0;
 padding: 0;
 }
+@font-face {
+font-family: "rollo";
+src: url(fonts/Rolloglide-yY4m.ttf) format("truetype");
+}
+@font-face {
+font-family: "dreamland";
+src: url(fonts/Dreamland-0vWd.ttf) format("truetype");
+}
+@font-face {
+font-family:"dreamland-stars";
+src: url(fonts/DreamlandStars-e9Zp.ttf) format("truetype");
+}
+@font-face {
+font-family: "unicorn";
+src: url(fonts/UnicornCalligraphy-oK7B.ttf) format("truetype");
+}
 body {
-padding: 20px;
+padding: 25px 0 20px;
 text-align: center;
 /*background: linear-gradient(to right, rgba(255, 0, 0, 0.2), rgba(255, 255, 0, 0.2), rgba(0, 0, 255, 0.2));*/
 background: url('backgrounds/gradient2.jpg') 0 0/cover;
 }
 h1 {
 text-align: center;
+font-size: 32px;
+font-family: "dreamland";
+}
+.rainbow{
+font-family: "unicorn";
 font-size: 40px;
+background-color: linear-gradient(0.25turn, red, orange yellow, green, blue, indigo, violet);
+/*background: url(backgrounds/gradient1.jpg) 0 0/cover;*/
 }
 #calc-body {
-margin: 30px auto 20px;
+margin: 40px auto 20px;
 padding: 10px;
 border: 3px solid red;
 outline: 3px solid orange;
@@ -26,9 +49,10 @@ box-shadow: -6px -6px 10px blue, 6px 6px 10px blue;
 text-align: center;
 }
 button {
+font-family: "unicorn";
 border-radius: 100%;
 margin: 2px;
-font-size: 24px;
+font-size: 28px;
 padding: 10px;
 width: 20%;
 height: auto;
@@ -50,6 +74,7 @@ padding: 5px;
 border-radius: 3px;
 font-size: 26px;
 text-align: right;
+font-family: "unicorn";
 }
 .red, .number.red {
 color: red;
