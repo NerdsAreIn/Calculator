@@ -8,9 +8,12 @@ let result;
 let num1Array;
 let num2Array;
 let numberContent;
-let operatorContainer;
-let randomColour;
+let resultContainer;
+//let operatorContainer = document.createElement("span");
+let equalsContainer;
+let randomColour ='#'+Math.floor(Math.random()*16777215).toString(16);
 let operatorArray = [];
+const equalsInner = document.createTextNode(" = ");
 const output = document.querySelector("output");
 const clearButton = document.getElementById("AC");
 const equals_sign = document.getElementById("equals");
@@ -57,34 +60,53 @@ backspace.onclick = () => {
 
 operators.forEach((operatorButton) => {
     operatorButton.addEventListener("click", () => {
-        operator = " " + operatorButton.getAttribute("id") + " ";
+        operator = operatorButton.getAttribute("id");
         if (output.textContent.includes("=")) {
             output.textContent += "";
             return;
         }
-        else if (operator == " * ") {
+        else if (operator == "*") {
             operatorContainer = document.createElement("span");
             operatorInner = document.createTextNode("×");
             operatorContainer.appendChild(operatorInner);
             output.appendChild(operatorContainer);
         }
-        else if (operator == " / ") {
-            output.textContent += " ÷ ";
+        else if (operator == "/") {
+            operatorContainer = document.createElement("span");
+            operatorInner = document.createTextNode("÷");
+            operatorContainer.appendChild(operatorInner);
+            output.appendChild(operatorContainer);
         }
-        else { output.textContent += operator; }
+        else { 
+            operatorContainer = document.createElement("span");
+            operatorInner = document.createTextNode(operator);
+            operatorContainer.appendChild(operatorInner);
+            output.appendChild(operatorContainer);        
+        }
         console.log({operator});
         operatorArray[operatorArray.length] = operator;
         console.log({operatorArray});
         if (operatorArray.length > 1) {
             result = operate(operatorArray[operatorArray.length - 2], num1, num2);
-            output.textContent = result;
-            if (operator == " * ") {
-                output.textContent += " × ";
+            //output.textContent = result;
+            resultContainer = document.createElement("span");
+            resultContainer.textContent = result;
+            resultContainer.style.color = randomColour;
+            output.textContent = "";
+            output.appendChild(resultContainer);
+            if (operator == "*") {
+                operatorContainer = document.createElement("span");
+                operatorInner = document.createTextNode("×");
+                operatorContainer.appendChild(operatorInner);
+                output.appendChild(operatorContainer);
             }
-            else if (operator == " / ") {
-                output.textContent += " ÷ ";
+            else if (operator == "/") {
+                operatorContainer = document.createElement("span");
+                operatorInner = document.createTextNode("÷");
+                operatorContainer.appendChild(operatorInner);
+                output.appendChild(operatorContainer);
             }
-            else output.textContent += operator;
+            //else output.textContent += operator;
             console.log({result});
             num1 = result;
             num2 = "";
@@ -114,12 +136,14 @@ equals_sign.onclick = () => {
             output.textContent += "";
             return;
         }
-    output.textContent += " = ";
+    equalsContainer = document.createElement("span");
+    equalsContainer.appendChild(equalsInner);
+    output.appendChild(equalsContainer);
     result = operate(operator, num1, num2);
     if (result.toString().includes(".")) {
         result = result.toFixed(2);
     }
-    let resultContainer = document.createElement("span");
+    resultContainer = document.createElement("span");
     resultContainer.textContent = result;
     randomColour = '#'+Math.floor(Math.random()*16777215).toString(16);
     resultContainer.style.color = randomColour;
@@ -314,19 +338,19 @@ return quotient;
 }
 
 function operate(operator, num1, num2) {
-    if (operator == " + ") {
+    if (operator == "+") {
         let sum = add(num1, num2); 
         return sum;   
     }
-    else if (operator == " - ") {
+    else if (operator == "-") {
         let difference = subtract(num1, num2);
         return difference;
     }
-    else if (operator == " * ") {
+    else if (operator == "*") {
         let product = multiply(num1, num2);
         return product;
     }
-    else if (operator == " / ") {
+    else if (operator == "/") {
         let quotient = divide(num1, num2);
         return quotient;
     }
