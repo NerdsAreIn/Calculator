@@ -4,17 +4,20 @@ let newNumber;
 let newNumber2;
 let operator;
 let result;
-//let outputArray;
 let num1Array;
 let num2Array;
 let numberContent;
 let resultContainer;
-//let operatorContainer = document.createElement("span");
+let operatorContainer;
 let equalsContainer;
 let randomColour ='#'+Math.floor(Math.random()*16777215).toString(16);
+let outputItems2;
 let operatorArray = [];
+let decimalContainer = document.createElement("span");
+let decimalContainer2 = document.createElement("span");
 const equalsInner = document.createTextNode(" = ");
 const output = document.querySelector("output");
+let outputItems;
 const clearButton = document.getElementById("AC");
 const equals_sign = document.getElementById("equals");
 const numberButtons = Array.from(document.getElementsByClassName("number"));
@@ -22,8 +25,16 @@ const operators = Array.from(document.getElementsByClassName("operator"));
 const decimal = document.getElementById("dot");
 const backspace = document.getElementById("backspace");
 
+
 backspace.onclick = () => {
-    if (num2 !== "") {
+    outputItems = Array.from(output.getElementsByTagName("span"));
+    let outputItems2 = outputItems.splice((outputItems[outputItems.length -1]), 1);
+    outputItems - outputItems2;
+    //outputItems2 = outputItems;    
+    console.log({outputItems});
+    output.textContent = "";     
+    //return outputItems;
+    /*if (num2 !== "") {
     num2Array = String(num2).split("");
     console.log({num2Array});
     output.textContent - Number(num2Array);
@@ -37,7 +48,7 @@ backspace.onclick = () => {
     }
     /*else if (num2 == "" && operator != undefined) {
      output.textContent -= operator;
-    }*/
+    }
 // TODO: The code below works. Now for num2 and operator.
     else {
         num1Array = String(num1).split("");
@@ -52,11 +63,11 @@ backspace.onclick = () => {
         else output.textContent = Number(newNum.join(""));
         return num1;
     }
-   /* outputArray = output.textContent.toString().split("");
+   outputArray = output.textContent.toString().split("");
     console.log({outputArray});
     outputArray.pop();
     output.textContent = outputArray.join("");*/
-}
+};
 
 operators.forEach((operatorButton) => {
     operatorButton.addEventListener("click", () => {
@@ -69,17 +80,20 @@ operators.forEach((operatorButton) => {
             operatorContainer = document.createElement("span");
             operatorInner = document.createTextNode("×");
             operatorContainer.appendChild(operatorInner);
+            operatorContainer.style.margin = "4px";
             output.appendChild(operatorContainer);
         }
         else if (operator == "/") {
             operatorContainer = document.createElement("span");
             operatorInner = document.createTextNode("÷");
             operatorContainer.appendChild(operatorInner);
+            operatorContainer.style.margin = "4px";
             output.appendChild(operatorContainer);
         }
         else { 
             operatorContainer = document.createElement("span");
             operatorInner = document.createTextNode(operator);
+            operatorContainer.style.margin = "4px";
             operatorContainer.appendChild(operatorInner);
             output.appendChild(operatorContainer);        
         }
@@ -88,7 +102,6 @@ operators.forEach((operatorButton) => {
         console.log({operatorArray});
         if (operatorArray.length > 1) {
             result = operate(operatorArray[operatorArray.length - 2], num1, num2);
-            //output.textContent = result;
             resultContainer = document.createElement("span");
             resultContainer.textContent = result;
             resultContainer.style.color = randomColour;
@@ -97,6 +110,7 @@ operators.forEach((operatorButton) => {
             if (operator == "*") {
                 operatorContainer = document.createElement("span");
                 operatorInner = document.createTextNode("×");
+                operatorContainer.style.margin = "4px";
                 operatorContainer.appendChild(operatorInner);
                 output.appendChild(operatorContainer);
             }
@@ -104,14 +118,23 @@ operators.forEach((operatorButton) => {
                 operatorContainer = document.createElement("span");
                 operatorInner = document.createTextNode("÷");
                 operatorContainer.appendChild(operatorInner);
+                operatorContainer.style.margin = "4px";
                 output.appendChild(operatorContainer);
             }
-            //else output.textContent += operator;
+            else {
+                operatorContainer = document.createElement("span");
+                operatorInner = document.createTextNode(operator);
+                operatorContainer.appendChild(operatorInner);
+                operatorContainer.style.margin = "4px";
+                output.appendChild(operatorContainer); 
+            }
             console.log({result});
             num1 = result;
-            num2 = "";
-        }        
-        return operator;
+            num2 = ""; 
+            //outputItems += operatorContainer;
+            console.log({outputItems});           
+            return operator;
+        }
     });
 });
 
@@ -122,11 +145,17 @@ function addDecimal() {
         output.textContent += "";
     }
      else if (operator != undefined && !num2.includes(".")) {
-        output.textContent += ".";
+        //output.textContent += ".";
+        decimalContainer2.textContent = ".";
+        decimalContainer2.style.margin = "0px";
+        output.appendChild(decimalContainer2);
         num2 += ".";
     }
     else if (!num1.includes(".")) {
-        output.textContent += ".";
+        //output.textContent += ".";
+        decimalContainer.textContent = ".";
+        decimalContainer.style.margin = "0px";
+        output.appendChild(decimalContainer);
         num1 += ".";
     }
 }
@@ -138,6 +167,7 @@ equals_sign.onclick = () => {
         }
     equalsContainer = document.createElement("span");
     equalsContainer.appendChild(equalsInner);
+    equalsContainer.style.margin = "3px";
     output.appendChild(equalsContainer);
     result = operate(operator, num1, num2);
     if (result.toString().includes(".")) {
@@ -234,9 +264,11 @@ for (let i = 0; i < numberButtons.length; i++) {
                 output.appendChild(newNumber);                
             }                    
             console.log({num1});
+            //outputItems += newNumber;
+            //console.log({outputItems});
             return num1;
-        }
-        else {
+            }
+            else {
             numberContent = numberButtons[i].getAttribute("id");
             num2 += numberContent;  
             if (numberButtons[i].className === "number red") {
