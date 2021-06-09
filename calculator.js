@@ -8,6 +8,8 @@ let result;
 let num1Array;
 let num2Array;
 let numberContent;
+let operatorContainer;
+let randomColour;
 let operatorArray = [];
 const output = document.querySelector("output");
 const clearButton = document.getElementById("AC");
@@ -61,7 +63,10 @@ operators.forEach((operatorButton) => {
             return;
         }
         else if (operator == " * ") {
-            output.textContent += " × ";
+            operatorContainer = document.createElement("span");
+            operatorInner = document.createTextNode("×");
+            operatorContainer.appendChild(operatorInner);
+            output.appendChild(operatorContainer);
         }
         else if (operator == " / ") {
             output.textContent += " ÷ ";
@@ -111,11 +116,15 @@ equals_sign.onclick = () => {
         }
     output.textContent += " = ";
     result = operate(operator, num1, num2);
-    console.log({result});
     if (result.toString().includes(".")) {
-        output.textContent += result.toFixed(2);
+        result = result.toFixed(2);
     }
-    else output.textContent += result;
+    let resultContainer = document.createElement("span");
+    resultContainer.textContent = result;
+    randomColour = '#'+Math.floor(Math.random()*16777215).toString(16);
+    resultContainer.style.color = randomColour;
+    console.log({result});
+    output.appendChild(resultContainer);
 }
 
 clearButton.onclick = () => {
@@ -139,7 +148,10 @@ for (let i = 0; i < numberButtons.length; i++) {
             num1 += numberContent;
             if (numberButtons[i].className === "number red") {
                 newNumber = document.createElement("span");
-                newNumber.textContent = numberButtons[i].getAttribute("id"); 
+                //let inner = document.createTextNode(numberButtons[i].getAttribute("id"));
+                newNumber.textContent = numberButtons[i].getAttribute("id");
+                //console.log({inner});
+                //newNumber.style.color = "red";
                 newNumber.setAttribute("style", "color:red");
                 output.appendChild(newNumber);                
             }       
