@@ -11,13 +11,13 @@ let resultContainer;
 let operatorContainer;
 let equalsContainer;
 let randomColour ='#'+Math.floor(Math.random()*16777215).toString(16);
-let outputItems2;
 let operatorArray = [];
 let decimalContainer = document.createElement("span");
 let decimalContainer2 = document.createElement("span");
 const equalsInner = document.createTextNode(" = ");
 const output = document.querySelector("output");
 let outputItems;
+let outputArray;
 const clearButton = document.getElementById("AC");
 const equals_sign = document.getElementById("equals");
 const numberButtons = Array.from(document.getElementsByClassName("number"));
@@ -25,15 +25,42 @@ const operators = Array.from(document.getElementsByClassName("operator"));
 const decimal = document.getElementById("dot");
 const backspace = document.getElementById("backspace");
 
+function removeFinalSpan() {
+    //outputItems = Array.from(output.getElementsByTagName("span"));
+    //console.log({outputItems});
+    //outputItems.pop();  
+    //let outputItems2 = outputItems;  
+    //output.textContent = outputItems2.join("");
+    outputArray = Array.from(output.textContent);
+    console.log({outputArray});
+    outputArray.pop();
+    //outputArray = Number(outputArray.join(""));
+    console.log({outputArray});
+    let textArray = outputArray.filter(item => {
+        item = Number(item);
+        console.log({item});
+        if (typeof item == "number") {
+        return item;
+        }
+     });
+    let index = outputArray.indexOf("+"||"×"||"-"||"÷");
+    console.log({index});
+    if (output.textContent.includes("=")) return;
+    else if (operator == undefined) {
+        num1 = textArray;
+        console.log({num1});
+    } 
+    else if (num2 != "") {
+        num2 = outputArray.join("").slice(index + 1);
+        console.log({num2});
+    }  
+    console.log({textArray});
+    output.textContent = outputArray.join("");
+    }
 
-backspace.onclick = () => {
-    outputItems = Array.from(output.getElementsByTagName("span"));
-    let outputItems2 = outputItems.splice((outputItems[outputItems.length -1]), 1);
-    outputItems - outputItems2;
-    //outputItems2 = outputItems;    
-    console.log({outputItems});
-    output.textContent = "";     
-    //return outputItems;
+backspace.addEventListener("click", removeFinalSpan); 
+
+//backspace.onclick = () => {
     /*if (num2 !== "") {
     num2Array = String(num2).split("");
     console.log({num2Array});
@@ -46,7 +73,7 @@ backspace.onclick = () => {
     output.textContent + Number(newNum2.join(""));
     return num2;
     }
-    /*else if (num2 == "" && operator != undefined) {
+    /*else if  {
      output.textContent -= operator;
     }
 // TODO: The code below works. Now for num2 and operator.
@@ -66,8 +93,8 @@ backspace.onclick = () => {
    outputArray = output.textContent.toString().split("");
     console.log({outputArray});
     outputArray.pop();
-    output.textContent = outputArray.join("");*/
-};
+    output.textContent = outputArray.join("");
+};*/
 
 operators.forEach((operatorButton) => {
     operatorButton.addEventListener("click", () => {
