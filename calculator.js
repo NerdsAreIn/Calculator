@@ -4,8 +4,6 @@ let newNumber;
 let newNumber2;
 let operator;
 let result;
-let num1Array;
-let num2Array;
 let numberContent;
 let resultContainer;
 let operatorContainer;
@@ -14,10 +12,9 @@ let randomColour ='#'+Math.floor(Math.random()*16777215).toString(16);
 let operatorArray = [];
 let decimalContainer = document.createElement("span");
 let decimalContainer2 = document.createElement("span");
+let outputArray;
 const equalsInner = document.createTextNode(" = ");
 const output = document.querySelector("output");
-let outputItems;
-let outputArray;
 const clearButton = document.getElementById("AC");
 const equals_sign = document.getElementById("equals");
 const numberButtons = Array.from(document.getElementsByClassName("number"));
@@ -26,25 +23,20 @@ const decimal = document.getElementById("dot");
 const backspace = document.getElementById("backspace");
 
 function removeFinalSpan() {
-    //outputItems = Array.from(output.getElementsByTagName("span"));
-    //console.log({outputItems});
-    //outputItems.pop();  
-    //let outputItems2 = outputItems;  
-    //output.textContent = outputItems2.join("");
     outputArray = Array.from(output.textContent);
     console.log({outputArray});
     outputArray.pop();
-    //outputArray = Number(outputArray.join(""));
     console.log({outputArray});
+    let index = outputArray.indexOf("+"||"×"||"-"||"÷");
+    console.log({index});    
     let textArray = outputArray.filter(item => {
         item = Number(item);
         console.log({item});
         if (typeof item == "number") {
         return item;
         }
-     });
-    let index = outputArray.indexOf("+"||"×"||"-"||"÷");
-    console.log({index});
+     }); 
+    console.log({textArray});   
     if (output.textContent.includes("=")) return;
     else if (operator == undefined) {
         num1 = textArray;
@@ -53,48 +45,11 @@ function removeFinalSpan() {
     else if (num2 != "") {
         num2 = outputArray.join("").slice(index + 1);
         console.log({num2});
-    }  
-    console.log({textArray});
+    }    
     output.textContent = outputArray.join("");
-    }
+}
 
 backspace.addEventListener("click", removeFinalSpan); 
-
-//backspace.onclick = () => {
-    /*if (num2 !== "") {
-    num2Array = String(num2).split("");
-    console.log({num2Array});
-    output.textContent - Number(num2Array);
-    num2Array.pop();
-    let newNum2 = num2Array;
-    //let toBeDeleted = num1Array.pop();
-    num2 = Number(newNum2.join(""));
-    //output.textContent - toBeDeleted;
-    output.textContent + Number(newNum2.join(""));
-    return num2;
-    }
-    /*else if  {
-     output.textContent -= operator;
-    }
-// TODO: The code below works. Now for num2 and operator.
-    else {
-        num1Array = String(num1).split("");
-        console.log({num1Array});
-        num1Array.pop();
-        let newNum = num1Array;
-        console.log({newNum});
-        num1 = Number(newNum.join(""));
-        if (newNum.length === 0) {
-            output.textContent = "";
-        }
-        else output.textContent = Number(newNum.join(""));
-        return num1;
-    }
-   outputArray = output.textContent.toString().split("");
-    console.log({outputArray});
-    outputArray.pop();
-    output.textContent = outputArray.join("");
-};*/
 
 operators.forEach((operatorButton) => {
     operatorButton.addEventListener("click", () => {
@@ -128,7 +83,11 @@ operators.forEach((operatorButton) => {
         operatorArray[operatorArray.length] = operator;
         console.log({operatorArray});
         if (operatorArray.length > 1) {
+            // When user inputs another operator (instead of clicking equals), the result of the previous operation, using the previous operator in the array, is returned and stored as num1 for the next operation, while num2 is reset to nothing - awaiting user input:
             result = operate(operatorArray[operatorArray.length - 2], num1, num2);
+            console.log({result});
+            num1 = result;
+            num2 = "";  
             resultContainer = document.createElement("span");
             resultContainer.textContent = result;
             resultContainer.style.color = randomColour;
@@ -154,12 +113,7 @@ operators.forEach((operatorButton) => {
                 operatorContainer.appendChild(operatorInner);
                 operatorContainer.style.margin = "4px";
                 output.appendChild(operatorContainer); 
-            }
-            console.log({result});
-            num1 = result;
-            num2 = ""; 
-            //outputItems += operatorContainer;
-            console.log({outputItems});           
+            }   
             return operator;
         }
     });
@@ -172,14 +126,12 @@ function addDecimal() {
         output.textContent += "";
     }
      else if (operator != undefined && !num2.includes(".")) {
-        //output.textContent += ".";
         decimalContainer2.textContent = ".";
         decimalContainer2.style.margin = "0px";
         output.appendChild(decimalContainer2);
         num2 += ".";
     }
     else if (!num1.includes(".")) {
-        //output.textContent += ".";
         decimalContainer.textContent = ".";
         decimalContainer.style.margin = "0px";
         output.appendChild(decimalContainer);
@@ -189,22 +141,22 @@ function addDecimal() {
 
 equals_sign.onclick = () => {
     if (output.textContent.includes("=")) {
-            output.textContent += "";
-            return;
-        }
+        output.textContent += "";
+        return;
+    }
     equalsContainer = document.createElement("span");
     equalsContainer.appendChild(equalsInner);
     equalsContainer.style.margin = "3px";
     output.appendChild(equalsContainer);
     result = operate(operator, num1, num2);
+    console.log({result});
+    // The final result is rounded, while the result of the previous operation when pressing another operator  is not rounded, for the sake of maximum accuracy:
     if (result.toString().includes(".")) {
         result = result.toFixed(2);
-    }
+    }    
     resultContainer = document.createElement("span");
     resultContainer.textContent = result;
-    randomColour = '#'+Math.floor(Math.random()*16777215).toString(16);
-    resultContainer.style.color = randomColour;
-    console.log({result});
+    resultContainer.style.color = randomColour;    
     output.appendChild(resultContainer);
 }
 
@@ -214,7 +166,7 @@ clearButton.onclick = () => {
         num2 = "";
         operator = undefined;
         operatorArray = [];
-     }
+}
 
 for (let i = 0; i < numberButtons.length; i++) {
     numberButtons[i].onclick = () => {
@@ -229,10 +181,7 @@ for (let i = 0; i < numberButtons.length; i++) {
             num1 += numberContent;
             if (numberButtons[i].className === "number red") {
                 newNumber = document.createElement("span");
-                //let inner = document.createTextNode(numberButtons[i].getAttribute("id"));
                 newNumber.textContent = numberButtons[i].getAttribute("id");
-                //console.log({inner});
-                //newNumber.style.color = "red";
                 newNumber.setAttribute("style", "color:red");
                 output.appendChild(newNumber);                
             }       
@@ -291,8 +240,6 @@ for (let i = 0; i < numberButtons.length; i++) {
                 output.appendChild(newNumber);                
             }                    
             console.log({num1});
-            //outputItems += newNumber;
-            //console.log({outputItems});
             return num1;
             }
             else {
@@ -414,3 +361,8 @@ function operate(operator, num1, num2) {
         return quotient;
     }
 }  
+
+
+
+
+ 
