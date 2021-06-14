@@ -109,4 +109,8 @@ color: brown;
 }
 .lime {
 color: lime;
+} 
+@media screen and (max-width: 600px) {
+	#calc-body { width: 65vw;}
 }
+ 
