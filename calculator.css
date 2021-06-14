@@ -45,7 +45,7 @@ padding: 10px;
 border: 3px solid red;
 outline: 3px solid orange;
 display: inline-block;
-width: 25vw;
+width: 30vw;
 border-radius: 10px;
 background-color: rgb(210, 252, 252);
 box-shadow: -6px -6px 10px blue, 6px 6px 10px blue;
@@ -78,6 +78,7 @@ border-radius: 3px;
 font-size: 28px;
 text-align: right;
 font-family: "unicorn";
+overflow: hidden;
 }
 .red, .number.red {
 color: red;

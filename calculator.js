@@ -26,22 +26,33 @@ function removeFinalSpan() {
     outputArray = Array.from(output.textContent);
     console.log({outputArray});
     outputArray.pop();
+    if (outputArray.length > 23) {
+        output.style.height = "80px";
+    }
+    else output.style.height = "40px";
     console.log({outputArray});
-    let index = outputArray.indexOf("+"||"×"||"-"||"÷");
+    let index;
+    if (outputArray.toString().includes("÷")) {index = outputArray.indexOf("÷");}
+    else if (outputArray.toString().includes("+")) {index = outputArray.indexOf("+");}
+    else if (outputArray.toString().includes("-")) index = outputArray.indexOf("-");
+    else if (outputArray.toString().includes("×")) index = outputArray.indexOf("×");
     console.log({index});    
     let textArray = outputArray.filter(item => {
         item = Number(item);
         console.log({item});
-        if (typeof item == "number") {
+        if (typeof item == "number"|| item == "0") {
         return item;
         }
      }); 
     console.log({textArray});   
     if (output.textContent.includes("=")) return;
     else if (operator == undefined) {
-        num1 = textArray;
+        num1 = textArray.join("");
         console.log({num1});
     } 
+    /*else if (num2 == "" && operator != undefined) {
+        operatorArray.pop();
+    }*/
     else if (num2 != "") {
         num2 = outputArray.join("").slice(index + 1);
         console.log({num2});
@@ -51,14 +62,16 @@ function removeFinalSpan() {
 
 backspace.addEventListener("click", removeFinalSpan); 
 
+// FIXME: want to find a way to prevent double-clicking of "/" and "x" resulting in "Infinity" and "0", respectively...
 operators.forEach((operatorButton) => {
-    operatorButton.addEventListener("click", () => {
+    operatorButton.addEventListener("click", () => {              
         operator = operatorButton.getAttribute("id");
         if (output.textContent.includes("=")) {
             output.textContent += "";
             return;
         }
-        else if (operator == "*") {
+        else if (operator == "*") {            
+            //if (output.contains(operatorContainer)) {return;}  
             operatorContainer = document.createElement("span");
             operatorInner = document.createTextNode("×");
             operatorContainer.appendChild(operatorInner);
@@ -66,6 +79,7 @@ operators.forEach((operatorButton) => {
             output.appendChild(operatorContainer);
         }
         else if (operator == "/") {
+            //if (operatorArray[operatorArray.length-1] == "/") {return;}  
             operatorContainer = document.createElement("span");
             operatorInner = document.createTextNode("÷");
             operatorContainer.appendChild(operatorInner);
@@ -86,6 +100,9 @@ operators.forEach((operatorButton) => {
             // When user inputs another operator (instead of clicking equals), the result of the previous operation, using the previous operator in the array, is returned and stored as num1 for the next operation, while num2 is reset to nothing - awaiting user input:
             result = operate(operatorArray[operatorArray.length - 2], num1, num2);
             console.log({result});
+            if (result.toString().includes(".")) {
+                result = result.toFixed(4);
+            }    
             num1 = result;
             num2 = "";  
             resultContainer = document.createElement("span");
@@ -93,7 +110,7 @@ operators.forEach((operatorButton) => {
             resultContainer.style.color = randomColour;
             output.textContent = "";
             output.appendChild(resultContainer);
-            if (operator == "*") {
+            if (operator == "*") {                 
                 operatorContainer = document.createElement("span");
                 operatorInner = document.createTextNode("×");
                 operatorContainer.style.margin = "4px";
@@ -156,12 +173,17 @@ equals_sign.onclick = () => {
     }    
     resultContainer = document.createElement("span");
     resultContainer.textContent = result;
-    resultContainer.style.color = randomColour;    
+    resultContainer.style.color = randomColour; 
     output.appendChild(resultContainer);
+    outputArray = Array.from(output.textContent);
+    if (outputArray.length > 23) {
+        output.style.height = "80px";
+    }
 }
 
 clearButton.onclick = () => {
         output.textContent = "";
+        output.style.height = "40px";
         num1 = "";
         num2 = "";
         operator = undefined;
@@ -170,6 +192,11 @@ clearButton.onclick = () => {
 
 for (let i = 0; i < numberButtons.length; i++) {
     numberButtons[i].onclick = () => {
+        outputArray = Array.from(output.textContent);
+        if (outputArray.length > 23) {
+            output.style.height = "80px";
+        }
+        else output.style.height = "40px";
         if (output.textContent.includes("=")) {
             num1 = "";
             num2 = "";
@@ -241,8 +268,8 @@ for (let i = 0; i < numberButtons.length; i++) {
             }                    
             console.log({num1});
             return num1;
-            }
-            else {
+        }
+        else {
             numberContent = numberButtons[i].getAttribute("id");
             num2 += numberContent;  
             if (numberButtons[i].className === "number red") {
@@ -307,7 +334,7 @@ for (let i = 0; i < numberButtons.length; i++) {
             }                    
             console.log({num2});    
             return num2;
-        }
+        }         
     }
 }
  
@@ -360,9 +387,4 @@ function operate(operator, num1, num2) {
         let quotient = divide(num1, num2);
         return quotient;
     }
-}  
-
-
-
-
- 
+}
