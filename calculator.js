@@ -13,6 +13,7 @@ let operatorArray = [];
 let decimalContainer = document.createElement("span");
 let decimalContainer2 = document.createElement("span");
 let outputArray;
+let numberColors = [];
 const equalsInner = document.createTextNode(" = ");
 const output = document.querySelector("output");
 const clearButton = document.getElementById("AC");
@@ -189,7 +190,6 @@ clearButton.onclick = () => {
         operator = undefined;
         operatorArray = [];
 }
-
 for (let i = 0; i < numberButtons.length; i++) {
     numberButtons[i].onclick = () => {
         outputArray = Array.from(output.textContent);
@@ -220,7 +220,7 @@ for (let i = 0; i < numberButtons.length; i++) {
             }   
             else if (numberButtons[i].className === "number yellow") {
                 newNumber = document.createElement("span");
-                newNumber.textContent = numberButtons[i].getAttribute("id"); 
+                newNumber.textContent = numberContent; 
                 newNumber.setAttribute("style", "color:yellow");
                 output.appendChild(newNumber);                
             }   
@@ -337,6 +337,36 @@ for (let i = 0; i < numberButtons.length; i++) {
         }         
     }
 }
+
+document.addEventListener("keypress", (event) => {
+    console.log(event);
+    outputArray = Array.from(output.textContent);
+        if (outputArray.length > 23) {
+            output.style.height = "80px";
+        }
+        else output.style.height = "40px";
+        if (output.textContent.includes("=")) {
+            num1 = "";
+            num2 = "";
+            output.textContent += "";
+            return;
+        }
+    if (operator == undefined) {
+        if (typeof Number(event.key) == "number") {
+            numberContent = event.key;
+            num1 += numberContent;
+            console.log({num1});  
+            newNumber = document.createElement("span");
+            newNumber.textContent = numberContent;
+            for (number of numberButtons) {
+               numberColors[number.getAttribute("id")] = String(number.className).slice(6);
+            }
+            console.log({numberColors});            
+            newNumber.setAttribute("style", `color: ${numberColors[numberContent]}`);
+            output.appendChild(newNumber);
+        }
+    }
+});
  
 function add (a, b, ...numbers) {
     let sum = +a + +b;
