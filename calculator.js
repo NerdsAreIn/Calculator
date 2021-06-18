@@ -8,7 +8,7 @@ let numberContent;
 let resultContainer;
 let operatorContainer;
 let equalsContainer;
-let randomColour ='#'+Math.floor(Math.random()*16777215).toString(16);
+let randomColour;
 let operatorArray = [];
 let decimalContainer = document.createElement("span");
 let decimalContainer2 = document.createElement("span");
@@ -22,6 +22,10 @@ const numberButtons = Array.from(document.getElementsByClassName("number"));
 const operators = Array.from(document.getElementsByClassName("operator"));
 const decimal = document.getElementById("dot");
 const backspace = document.getElementById("backspace");
+
+for (number of numberButtons) {
+    numberColors[number.getAttribute("id")] = String(number.className).slice(6);
+}
 
 function removeFinalSpan() {
     outputArray = Array.from(output.textContent);
@@ -67,33 +71,23 @@ backspace.addEventListener("click", removeFinalSpan);
 operators.forEach((operatorButton) => {
     operatorButton.addEventListener("click", () => {              
         operator = operatorButton.getAttribute("id");
+        operatorContainer = document.createElement("span");
         if (output.textContent.includes("=")) {
             output.textContent += "";
             return;
-        }
+        }        
         else if (operator == "*") {            
-            //if (output.contains(operatorContainer)) {return;}  
-            operatorContainer = document.createElement("span");
             operatorInner = document.createTextNode("×");
-            operatorContainer.appendChild(operatorInner);
-            operatorContainer.style.margin = "4px";
-            output.appendChild(operatorContainer);
         }
-        else if (operator == "/") {
-            //if (operatorArray[operatorArray.length-1] == "/") {return;}  
-            operatorContainer = document.createElement("span");
+        else if (operator == "/") {            
             operatorInner = document.createTextNode("÷");
-            operatorContainer.appendChild(operatorInner);
-            operatorContainer.style.margin = "4px";
-            output.appendChild(operatorContainer);
         }
         else { 
-            operatorContainer = document.createElement("span");
-            operatorInner = document.createTextNode(operator);
-            operatorContainer.style.margin = "4px";
-            operatorContainer.appendChild(operatorInner);
-            output.appendChild(operatorContainer);        
+            operatorInner = document.createTextNode(operator);                   
         }
+        operatorContainer.appendChild(operatorInner);
+        operatorContainer.style.margin = "4px";
+        output.appendChild(operatorContainer);
         console.log({operator});
         operatorArray[operatorArray.length] = operator;
         console.log({operatorArray});
@@ -108,30 +102,23 @@ operators.forEach((operatorButton) => {
             num2 = "";  
             resultContainer = document.createElement("span");
             resultContainer.textContent = result;
+            randomColour ='#'+Math.floor(Math.random()*16777215).toString(16);
             resultContainer.style.color = randomColour;
             output.textContent = "";
             output.appendChild(resultContainer);
-            if (operator == "*") {                 
-                operatorContainer = document.createElement("span");
+            operatorContainer = document.createElement("span");
+            if (operator == "*") {              
                 operatorInner = document.createTextNode("×");
-                operatorContainer.style.margin = "4px";
-                operatorContainer.appendChild(operatorInner);
-                output.appendChild(operatorContainer);
             }
             else if (operator == "/") {
-                operatorContainer = document.createElement("span");
                 operatorInner = document.createTextNode("÷");
-                operatorContainer.appendChild(operatorInner);
-                operatorContainer.style.margin = "4px";
-                output.appendChild(operatorContainer);
-            }
+            }    
             else {
-                operatorContainer = document.createElement("span");
                 operatorInner = document.createTextNode(operator);
-                operatorContainer.appendChild(operatorInner);
-                operatorContainer.style.margin = "4px";
-                output.appendChild(operatorContainer); 
-            }   
+            }
+            operatorContainer.style.margin = "4px";
+            operatorContainer.appendChild(operatorInner);
+            output.appendChild(operatorContainer);              
             return operator;
         }
     });
@@ -174,6 +161,7 @@ equals_sign.onclick = () => {
     }    
     resultContainer = document.createElement("span");
     resultContainer.textContent = result;
+    randomColour ='#'+Math.floor(Math.random()*16777215).toString(16);
     resultContainer.style.color = randomColour; 
     output.appendChild(resultContainer);
     outputArray = Array.from(output.textContent);
@@ -190,6 +178,7 @@ clearButton.onclick = () => {
         operator = undefined;
         operatorArray = [];
 }
+
 for (let i = 0; i < numberButtons.length; i++) {
     numberButtons[i].onclick = () => {
         outputArray = Array.from(output.textContent);
@@ -206,132 +195,20 @@ for (let i = 0; i < numberButtons.length; i++) {
         else if (operator == undefined) {            
             numberContent = numberButtons[i].getAttribute("id");
             num1 += numberContent;
-            if (numberButtons[i].className === "number red") {
-                newNumber = document.createElement("span");
-                newNumber.textContent = numberButtons[i].getAttribute("id");
-                newNumber.setAttribute("style", "color:red");
-                output.appendChild(newNumber);                
-            }       
-            else if (numberButtons[i].className === "number orange") {
-                newNumber = document.createElement("span");
-                newNumber.textContent = numberButtons[i].getAttribute("id"); 
-                newNumber.setAttribute("style", "color:orange");
-                output.appendChild(newNumber);                
-            }   
-            else if (numberButtons[i].className === "number yellow") {
-                newNumber = document.createElement("span");
-                newNumber.textContent = numberContent; 
-                newNumber.setAttribute("style", "color:yellow");
-                output.appendChild(newNumber);                
-            }   
-            else if (numberButtons[i].className === "number green") {
-                newNumber = document.createElement("span");
-                newNumber.textContent = numberButtons[i].getAttribute("id"); 
-                newNumber.setAttribute("style", "color:green");
-                output.appendChild(newNumber);                
-            }   
-            else if (numberButtons[i].className === "number blue") {
-                newNumber = document.createElement("span");
-                newNumber.textContent = numberButtons[i].getAttribute("id"); 
-                newNumber.setAttribute("style", "color:blue");
-                output.appendChild(newNumber);                
-            }   
-            else if (numberButtons[i].className === "number indigo") {
-                newNumber = document.createElement("span");
-                newNumber.textContent = numberButtons[i].getAttribute("id"); 
-                newNumber.setAttribute("style", "color:indigo");
-                output.appendChild(newNumber);                
-            }   
-            else if (numberButtons[i].className === "number violet") {
-                newNumber = document.createElement("span");
-                newNumber.textContent = numberButtons[i].getAttribute("id"); 
-                newNumber.setAttribute("style", "color:violet");
-                output.appendChild(newNumber);                
-            }   
-            else if (numberButtons[i].className === "number pink") {
-                newNumber = document.createElement("span");
-                newNumber.textContent = numberButtons[i].getAttribute("id"); 
-                newNumber.setAttribute("style", "color:pink");
-                output.appendChild(newNumber);                
-            }   
-            else if (numberButtons[i].className === "number brown") {
-                newNumber = document.createElement("span");
-                newNumber.textContent = numberButtons[i].getAttribute("id"); 
-                newNumber.setAttribute("style", "color:brown");
-                output.appendChild(newNumber);                
-            }   
-            else if (numberButtons[i].className === "number lime") {
-                newNumber = document.createElement("span");
-                newNumber.textContent = numberButtons[i].getAttribute("id"); 
-                newNumber.setAttribute("style", "color:lime");
-                output.appendChild(newNumber);                
-            }                    
+            newNumber = document.createElement("span");
+            newNumber.textContent = numberContent;
+            newNumber.setAttribute("style", `color: ${numberColors[numberContent]}`);
+            output.appendChild(newNumber);  
             console.log({num1});
             return num1;
         }
         else {
             numberContent = numberButtons[i].getAttribute("id");
-            num2 += numberContent;  
-            if (numberButtons[i].className === "number red") {
-                newNumber2 = document.createElement("span");
-                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
-                newNumber2.setAttribute("style", "color:red");
-                output.appendChild(newNumber2);                
-            }       
-            else if (numberButtons[i].className === "number orange") {
-                newNumber2 = document.createElement("span");
-                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
-                newNumber2.setAttribute("style", "color:orange");
-                output.appendChild(newNumber2);                
-            }   
-            else if (numberButtons[i].className === "number yellow") {
-                newNumber2 = document.createElement("span");
-                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
-                newNumber2.setAttribute("style", "color:yellow");
-                output.appendChild(newNumber2);                
-            }   
-            else if (numberButtons[i].className === "number green") {
-                newNumber2 = document.createElement("span");
-                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
-                newNumber2.setAttribute("style", "color:green");
-                output.appendChild(newNumber2);                
-            }   
-            else if (numberButtons[i].className === "number blue") {
-                newNumber2 = document.createElement("span");
-                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
-                newNumber2.setAttribute("style", "color:blue");
-                output.appendChild(newNumber2);                
-            }   
-            else if (numberButtons[i].className === "number indigo") {
-                newNumber2 = document.createElement("span");
-                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
-                newNumber2.setAttribute("style", "color:indigo");
-                output.appendChild(newNumber2);                
-            }   
-            else if (numberButtons[i].className === "number violet") {
-                newNumber2 = document.createElement("span");
-                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
-                newNumber2.setAttribute("style", "color:violet");
-                output.appendChild(newNumber2);                
-            }   
-            else if (numberButtons[i].className === "number pink") {
-                newNumber2 = document.createElement("span");
-                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
-                newNumber2.setAttribute("style", "color:pink");
-                output.appendChild(newNumber2);                
-            }   
-            else if (numberButtons[i].className === "number brown") {
-                newNumber2 = document.createElement("span");
-                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
-                newNumber2.setAttribute("style", "color:brown");
-                output.appendChild(newNumber2);                
-            }   
-            else if (numberButtons[i].className === "number lime") {
-                newNumber2 = document.createElement("span");
-                newNumber2.textContent = numberButtons[i].getAttribute("id"); 
-                newNumber2.setAttribute("style", "color:lime");
-                output.appendChild(newNumber2);                
-            }                    
+            num2 += numberContent; 
+            newNumber2 = document.createElement("span");
+            newNumber2.textContent = numberContent;
+            newNumber2.setAttribute("style", `color: ${numberColors[numberContent]}`);
+            output.appendChild(newNumber2);                 
             console.log({num2});    
             return num2;
         }         
@@ -341,32 +218,52 @@ for (let i = 0; i < numberButtons.length; i++) {
 document.addEventListener("keypress", (event) => {
     console.log(event);
     outputArray = Array.from(output.textContent);
-        if (outputArray.length > 23) {
-            output.style.height = "80px";
-        }
-        else output.style.height = "40px";
-        if (output.textContent.includes("=")) {
-            num1 = "";
-            num2 = "";
-            output.textContent += "";
-            return;
-        }
-    if (operator == undefined) {
-        if (typeof Number(event.key) == "number") {
-            numberContent = event.key;
+    if (outputArray.length > 23) {
+        output.style.height = "80px";
+    }
+    else output.style.height = "40px";
+    if (output.textContent.includes("=")) {
+        num1 = "";
+        num2 = "";
+        output.textContent += "";
+        return;
+    }    
+    checkNumber(event);
+    if (event.key == "*") {
+    operator = event.key;
+    console.log({operator});
+    operatorContainer = document.createElement("span");
+    operatorInner = document.createTextNode("×");
+    operatorContainer.style.margin = "4px";
+    operatorContainer.appendChild(operatorInner);
+    output.appendChild(operatorContainer);
+    return operator;
+    }
+});
+
+function checkNumber(event) {
+      if (event.key == 1||event.key == 2||event.key == 3||event.key == 4||event.key == 5||event.key == 6||event.key == 7||event.key == 8||event.key == 9||event.key == 0) {
+        numberContent = event.key;
+        if (operator == undefined) {
             num1 += numberContent;
             console.log({num1});  
             newNumber = document.createElement("span");
-            newNumber.textContent = numberContent;
-            for (number of numberButtons) {
-               numberColors[number.getAttribute("id")] = String(number.className).slice(6);
-            }
-            console.log({numberColors});            
+            newNumber.textContent = numberContent;                          
             newNumber.setAttribute("style", `color: ${numberColors[numberContent]}`);
             output.appendChild(newNumber);
+            return num1;
+        }
+        else {
+            num2 += numberContent; 
+            newNumber2 = document.createElement("span");
+            newNumber2.textContent = numberContent;
+            newNumber2.setAttribute("style", `color: ${numberColors[numberContent]}`);
+            output.appendChild(newNumber2);                 
+            console.log({num2});    
+            return num2;
         }
     }
-});
+}
  
 function add (a, b, ...numbers) {
     let sum = +a + +b;
